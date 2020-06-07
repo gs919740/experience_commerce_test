@@ -1,0 +1,123 @@
+{
+	"info": {
+		"_postman_id": "46a28239-4bb3-4797-93a6-3a32b0622183",
+		"name": "savereimburement",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "savereimburement",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "X-Api-Key",
+						"value": "guest_user@samco",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": "Mt3YmEvsMxerE2zw",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "attachment[]",
+							"type": "file",
+							"src": "/C:/Users/Ganesh/Downloads/image_2020_06_05T15_57_52_269Z.png"
+						},
+						{
+							"key": "attachment[]",
+							"type": "file",
+							"src": "/C:/Users/Ganesh/Downloads/image_2020_06_05T15_57_52_269Z.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/experience_commerce/Reimbursement_api/getdatewisereimbursement",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"experience_commerce",
+						"Reimbursement_api",
+						"getdatewisereimbursement"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "datewisereimbursement",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "X-Api-Key",
+						"value": "guest_user@samco",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": "Mt3YmEvsMxerE2zw",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "attachment[]",
+							"type": "file",
+							"src": "/C:/Users/Ganesh/Downloads/image_2020_06_05T15_57_52_269Z.png"
+						},
+						{
+							"key": "attachment[]",
+							"type": "file",
+							"src": "/C:/Users/Ganesh/Downloads/image_2020_06_05T15_57_52_269Z.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/experience_commerce/Reimbursement_api/getdatewisereimbursement",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"experience_commerce",
+						"Reimbursement_api",
+						"getdatewisereimbursement"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
