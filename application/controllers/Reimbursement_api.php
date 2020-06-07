@@ -30,7 +30,7 @@ class Reimbursement_api extends CI_Controller {
 	        $this->dataValidations($_POST,['purpose'],'purpose',$maxelement);
 	        $this->dataValidations($_POST,['mode'],'mode',$maxelement);
 	        $uploadedfilename = $this->do_upload('conveyance_attachment',$maxelement);
-	        $reimbursement_rel_data = $this->getdatafromform($_POST,['date','from','to','purpose','mode','distance','conv_invoiceno','conv_amount'],$maxelement,$uploadedfilename);
+	        $reimbursement_rel_data = $this->getdatafromform($_POST,['date','from','to','purpose','mode','distance','conv_invoiceno','conv_amount','pur_other_desc','mode_other_desc'],$maxelement,$uploadedfilename);
 	        $this->am->savereimburement($reimbursement_data,$reimbursement_rel_data);
 			$this->showResponse('success','Reimbursement details saved successfully');
 
@@ -75,7 +75,57 @@ class Reimbursement_api extends CI_Controller {
 		{
 			foreach ($data as $key => $value) {
 				
+				if($value['type']=='conveyance')
+				{
+					$remdata['date'] = $value['date']; 	
+					$remdata['from'] = $value['from']; 	
+					$remdata['to'] = $value['to']; 	
+					$remdata['purpose'] = $value['purpose']; 	
+					$remdata['distance'] = $value['distance']; 	
+					$remdata['invoiceno'] = $value['invoiceno']; 	
+					$remdata['amount'] = $value['amount'];
+					if($value['purpose']== 'other')
+					$remdata['purpose_description'] = $value['pur_other_desc'];
+					if($value['mode']== 'other')
+					$remdata['mode_description'] = $value['mode_other_desc']; 	
+					$remdata['attachment'] = base_url().'/uploads/'.$value['attachment'];
+					$montthwise_rem[$value['month']][$value['type']][]=$remdata; 	
+				}elseif($value['type']=='hotel')
+				{
+					$remdata['fromdate'] = $value['from_date']; 	
+					$remdata['todate'] = $value['to_date']; 	
+					$remdata['hotelname'] = $value['hotelname']; 	
+					$remdata['invoiceno'] = $value['invoiceno']; 	
+					$remdata['amount'] = $value['amount']; 	
+					$remdata['attachment'] = base_url().'/uploads/'.$value['attachment'];
+					$montthwise_rem[$value['month']][$value['type']][]=$remdata; 	
+				}
+				elseif($value['type']=='food')
+				{
+					$remdata['date'] = $value['date']; 	
+					$remdata['invoiceno'] = $value['invoiceno']; 	
+					$remdata['amount'] = $value['amount']; 	
+					$remdata['attachment'] = base_url().'/uploads/'.$value['attachment'];
+					$montthwise_rem[$value['month']][$value['type']][]=$remdata; 	
+				}
+				elseif($value['type']=='mobile')
+				{
+					$remdata['invoiceno'] = $value['invoiceno']; 	
+					$remdata['amount'] = $value['amount']; 	
+					$remdata['attachment'] = base_url().'/uploads/'.$value['attachment'];
+					$montthwise_rem[$value['month']][$value['type']][]=$remdata; 	
+				}
+				elseif($value['type']=='internet')
+				{
+					$remdata['invoiceno'] = $value['invoiceno']; 	
+					$remdata['amount'] = $value['amount']; 	
+					$remdata['attachment'] = base_url().'/uploads/'.$value['attachment'];
+					$montthwise_rem[$value['month']][$value['type']][]=$remdata; 	
+				}
+
 			}
+			$this->showResponse('success','date wise reimbursement details',$montthwise_rem);			
+
 		}else{
 
 			$this->showResponse('success','No data found');
@@ -220,8 +270,8 @@ class Reimbursement_api extends CI_Controller {
     	return $d && $d->format($format) == $date;
 	}
 	public function showResponse($status,$error,$output = null){
-        // ob_clean();
-        // header('Content-Type: application/json');
+        ob_clean();
+        header('Content-Type: application/json');
         $data = ['status' => $status, 'message' => $error,'output' => $output];
         echo json_encode($data);
         exit;
