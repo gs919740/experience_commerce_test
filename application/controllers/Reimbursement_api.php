@@ -70,7 +70,7 @@ class Reimbursement_api extends CI_Controller {
 
 	public function getdatewisereimbursement(){
 
-		$data = $this->am->getdatewisereimbursement();
+		$data = $this->am->getreimbursement();
 		if(!empty($data))
 		{
 			foreach ($data as $key => $value) {
@@ -89,7 +89,6 @@ class Reimbursement_api extends CI_Controller {
 					if($value['mode']== 'other')
 					$remdata['mode_description'] = $value['mode_other_desc']; 	
 					$remdata['attachment'] = base_url().'/uploads/'.$value['attachment'];
-					$montthwise_rem[$value['month']][$value['type']][]=$remdata; 	
 				}elseif($value['type']=='hotel')
 				{
 					$remdata['fromdate'] = $value['from_date']; 	
@@ -98,7 +97,6 @@ class Reimbursement_api extends CI_Controller {
 					$remdata['invoiceno'] = $value['invoiceno']; 	
 					$remdata['amount'] = $value['amount']; 	
 					$remdata['attachment'] = base_url().'/uploads/'.$value['attachment'];
-					$montthwise_rem[$value['month']][$value['type']][]=$remdata; 	
 				}
 				elseif($value['type']=='food')
 				{
@@ -106,22 +104,20 @@ class Reimbursement_api extends CI_Controller {
 					$remdata['invoiceno'] = $value['invoiceno']; 	
 					$remdata['amount'] = $value['amount']; 	
 					$remdata['attachment'] = base_url().'/uploads/'.$value['attachment'];
-					$montthwise_rem[$value['month']][$value['type']][]=$remdata; 	
 				}
 				elseif($value['type']=='mobile')
 				{
 					$remdata['invoiceno'] = $value['invoiceno']; 	
 					$remdata['amount'] = $value['amount']; 	
 					$remdata['attachment'] = base_url().'/uploads/'.$value['attachment'];
-					$montthwise_rem[$value['month']][$value['type']][]=$remdata; 	
 				}
 				elseif($value['type']=='internet')
 				{
 					$remdata['invoiceno'] = $value['invoiceno']; 	
 					$remdata['amount'] = $value['amount']; 	
 					$remdata['attachment'] = base_url().'/uploads/'.$value['attachment'];
-					$montthwise_rem[$value['month']][$value['type']][]=$remdata; 	
 				}
+				$montthwise_rem[$value['month']][$value['type']][]=$remdata; 	
 
 			}
 			$this->showResponse('success','date wise reimbursement details',$montthwise_rem);			
@@ -129,9 +125,84 @@ class Reimbursement_api extends CI_Controller {
 		}else{
 
 			$this->showResponse('success','No data found');
-
 		}	
+	}
 
+	public function getreimbursementdetails(){
+		$data = $this->am->getreimbursement();
+		if(!empty($data))
+		{
+			foreach ($data as $key => $value) {
+				
+				if($value['type']=='conveyance')
+				{
+					$remdata['id'] = $value['id']; 	
+					$remdata['month'] = $value['month']; 	
+					$remdata['type'] = $value['type']; 
+					$remdata['date'] = $value['date']; 	
+					$remdata['from'] = $value['from']; 	
+					$remdata['to'] = $value['to']; 	
+					$remdata['purpose'] = $value['purpose']; 	
+					$remdata['distance'] = $value['distance']; 	
+					$remdata['invoiceno'] = $value['invoiceno']; 	
+					$remdata['amount'] = $value['amount'];
+					if($value['purpose']== 'other')
+					$remdata['purpose_description'] = $value['pur_other_desc'];
+					if($value['mode']== 'other')
+					$remdata['mode_description'] = $value['mode_other_desc']; 	
+					$remdata['attachment'] = base_url().'/uploads/'.$value['attachment'];
+				}elseif($value['type']=='hotel')
+				{
+					$remdata['id'] = $value['id']; 	
+					$remdata['month'] = $value['month']; 	
+					$remdata['type'] = $value['type']; 
+					$remdata['fromdate'] = $value['from_date']; 	
+					$remdata['todate'] = $value['to_date']; 	
+					$remdata['hotelname'] = $value['hotelname']; 	
+					$remdata['invoiceno'] = $value['invoiceno']; 	
+					$remdata['amount'] = $value['amount']; 	
+					$remdata['attachment'] = base_url().'/uploads/'.$value['attachment'];
+				}
+				elseif($value['type']=='food')
+				{	
+					$remdata['id'] = $value['id']; 	
+					$remdata['month'] = $value['month']; 	
+					$remdata['type'] = $value['type']; 
+					$remdata['id'] = $value['id']; 	
+					$remdata['month'] = $value['month']; 	
+					$remdata['type'] = $value['type']; 	
+					$remdata['date'] = $value['date']; 	
+					$remdata['invoiceno'] = $value['invoiceno']; 	
+					$remdata['amount'] = $value['amount']; 	
+					$remdata['attachment'] = base_url().'/uploads/'.$value['attachment'];
+				}
+				elseif($value['type']=='mobile')
+				{	
+					$remdata['id'] = $value['id']; 	
+					$remdata['month'] = $value['month']; 	
+					$remdata['type'] = $value['type']; 
+					$remdata['invoiceno'] = $value['invoiceno']; 	
+					$remdata['amount'] = $value['amount']; 	
+					$remdata['attachment'] = base_url().'/uploads/'.$value['attachment'];
+				}
+				elseif($value['type']=='internet')
+				{
+					$remdata['id'] = $value['id']; 	
+					$remdata['month'] = $value['month']; 	
+					$remdata['type'] = $value['type']; 
+					$remdata['invoiceno'] = $value['invoiceno']; 	
+					$remdata['amount'] = $value['amount']; 	
+					$remdata['attachment'] = base_url().'/uploads/'.$value['attachment'];
+				}
+
+				$reimbursement_data [] =$remdata;
+			}
+			$this->showResponse('success','reimbursement details',$reimbursement_data);			
+
+		}else{
+
+			$this->showResponse('success','No data found');
+		}	
 
 	}
 

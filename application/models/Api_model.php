@@ -33,7 +33,7 @@ class Api_model extends CI_Model
 	}
 
 
-	public function getdatewisereimbursement(){
+	public function getreimbursement(){
 
 		$this->db->join('reimbursement_rel rbl', 'rbl.reimbursement_id = rb.id');
 		$data = $this->db->get('reimbursement rb')->result_array();	
